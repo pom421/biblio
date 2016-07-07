@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, Toast} from 'ionic-angular';
-import {BookDetailsPage} from '../book-details/book-details';
+import {LivreDetailsPage} from '../livre-details/livre-details';
 import {Constants} from '../../constants'
 
 @Component({
@@ -120,7 +120,7 @@ export class MesLivresPage {
 
   // navigation sur la page des détails
   itemTapped(event, item) {
-    this.nav.push(BookDetailsPage, {
+    this.nav.push(LivreDetailsPage, {
       item: item
     });
   }

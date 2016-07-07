@@ -3,10 +3,10 @@ import {NavController, NavParams} from 'ionic-angular';
 import {Constants} from '../../constants'
 
 @Component({
-  templateUrl: 'build/pages/book-details/book-details.html',
+  templateUrl: 'build/pages/livre-details/livre-details.html',
   providers: [Constants]
 })
-export class BookDetailsPage {
+export class LivreDetailsPage {
   selectedItem: any;
 
   constructor(private nav: NavController, navParams: NavParams, private constants: Constants) {
