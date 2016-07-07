@@ -4,10 +4,10 @@ import {BookDetailsPage} from '../book-details/book-details';
 import {Constants} from '../../constants'
 
 @Component({
-  templateUrl: 'build/pages/hello-ionic/hello-ionic.html',
+  templateUrl: 'build/pages/mes-livres/mes-livres.html',
   providers: [Constants]
 })
-export class HelloIonicPage {
+export class MesLivresPage {
   items: Array<{title: string, author: string, date: string, imageUrl: string, favorite: boolean, tag: string}>;
   // la requête dans le moteur de recherche
   query: string;
