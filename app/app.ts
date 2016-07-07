@@ -2,7 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {ionicBootstrap, Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {MesLivresPage} from './pages/mes-livres/mes-livres';
-import {ListPage} from './pages/list/list';
+import {AjouterLivrePage} from './pages/ajouter-livre/ajouter-livre';
 
 
 @Component({
@@ -24,7 +24,7 @@ class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Mes Livres', component: MesLivresPage },
-      { title: 'My First List', component: ListPage }
+      { title: 'Ajouter un livre', component: AjouterLivrePage }
     ];
   }
 
