@@ -14,15 +14,16 @@
   <!--<span [innerHTML]="doTag()"></span>-->
 
   <ion-list>
-    <ion-list-header>
+    <!--    <ion-list-header>
       Mes livres
     </ion-list-header>
-
+-->
     <ion-item>
       <!--<ion-icon item-left name="ios-funnel" padding-right></ion-icon>-->
       <ion-label>Filtre</ion-label>
 
-      <ion-select item-right [(ngModel)]="selectedFilter" cancelText="Annuler" placeholder="Choisir..." (ionChange)="filter()" [alertOptions]="filterOptionsAlert">
+      <ion-select item-right [(ngModel)]="selectedFilter" cancelText="Annuler" placeholder="Choisir..." (ionChange)="filter()"
+        [alertOptions]="filterOptionsAlert">
         <ion-option value="possede">{{ constants.categories["possede"] }}</ion-option>
         <ion-option value="a-vendre">{{ constants.categories["a-vendre"] }}</ion-option>
         <ion-option value="idee-cadeau">{{ constants.categories["idee-cadeau"] }}</ion-option>
@@ -51,7 +52,7 @@
         <button outline round small secondary *ngSwitchCase="'a-vendre'">à vendre</button>
         <button outline round small primary *ngSwitchDefault>possède</button>
       </span>
-      
+
       <button clear large item-right (click)="toggleFavorite(item)">
         <span [ngSwitch]="item.favorite">
           <ion-icon name="star-outline" *ngSwitchCase="false"></ion-icon>
@@ -59,7 +60,6 @@
         </span>
       </button>
     </button>
-
   </ion-list>
 
 </ion-content>
