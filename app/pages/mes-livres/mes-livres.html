@@ -44,14 +44,8 @@
       <ion-thumbnail item-left (click)="itemTapped($event, item)">
         <img src="{{ item.imageUrl }}">
       </ion-thumbnail>
-      <h2>{{ item.title }}</h2>
-      <p>{{ item.author }} . {{ item.date }}</p>
-
-      <span [ngSwitch]="item.tag" item-right (click)="clickTag(item.tag)">
-        <button outline round small danger *ngSwitchCase="'idee-cadeau'">idée cadeau</button>
-        <button outline round small secondary *ngSwitchCase="'a-vendre'">à vendre</button>
-        <button outline round small primary *ngSwitchDefault>possède</button>
-      </span>
+      <h3 text-wrap>{{ item.title }}</h3>
+      <p small>{{ item.author }} . {{ item.date }}</p>
 
       <button clear large item-right (click)="toggleFavorite(item)">
         <span [ngSwitch]="item.favorite">
@@ -59,6 +53,13 @@
           <ion-icon name="star" *ngSwitchCase="true"></ion-icon>
         </span>
       </button>
+
+      <div [ngSwitch]="item.tag" (click)="clickTag(item.tag)">
+        <button outline round small danger *ngSwitchCase="'idee-cadeau'">idée cadeau</button>
+        <button outline round small secondary *ngSwitchCase="'a-vendre'">à vendre</button>
+        <button outline round small primary *ngSwitchDefault>possède</button>
+      </div>
+
     </button>
   </ion-list>
 
