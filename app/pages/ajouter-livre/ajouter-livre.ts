@@ -11,29 +11,16 @@ import {Book} from '../../models/Book.ts'
 })
 export class AjouterLivrePage {
   book: Book;
-  // spinner
-  loading: any;
 
   constructor(private nav: NavController, private constants: Constants, private bookService: BookService) {
   }
 
-  spinner(){
-    let loading = Loading.create({
-      content: 'Chargement...',
-      duration: 3000
-    });
-
-    this.nav.present(loading);
-
-  }
-
   scan() {
-    // on remet le titre à undefined pour que l'affichage précédent disparaisse
+    // on efface le book pour que l'affichage précédent disparaisse
     this.book = undefined;
 
     let loading = Loading.create({
       content: 'Chargement...',
-      duration: 5000
     });
     
     this.nav.present(loading);
