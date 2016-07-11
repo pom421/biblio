@@ -11,7 +11,8 @@
 
 <ion-content>
   <ion-item>
-    <ion-input type="text" value="" placeholder="Taper un ISBN ou bien utiliser le scan"></ion-input>
+    <ion-input type="text" [(ngModel)]="isbn" value="" placeholder="Taper un ISBN ou bien utiliser le scan"></ion-input>
+    <button (click)="searchBook()">OK</button>
   </ion-item>
 
   <div padding>
@@ -26,7 +27,7 @@
     </ion-card-header>
 
     <ion-card-content>
-      <img src="{{ book.thumbnail }}" alt="">
+      <img *ngIf="book.thumbnail" src="{{ book.thumbnail }}" alt="jaquette du livre">
       Description : 
       {{ book.description }}
     </ion-card-content>
