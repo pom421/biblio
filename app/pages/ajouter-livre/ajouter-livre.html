@@ -18,5 +18,21 @@
     <button block (click)="scan()">
       Scanner ISBN
     </button>
+    <button (click)="spinner()">
+      spinner
+    </button>
   </div>
+
+  <ion-card *ngIf="book">
+    <ion-card-header>
+      Titre : {{ book.title }}
+    </ion-card-header>
+
+    <ion-card-content>
+      <img src="{{ book.thumbnail }}" alt="">
+      Description : 
+      {{ book.description }}
+    </ion-card-content>
+    
+  </ion-card>
 </ion-content>
