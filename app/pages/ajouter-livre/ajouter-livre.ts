@@ -15,16 +15,27 @@ export class AjouterLivrePage {
 
   constructor(private nav: NavController, private constants: Constants, private bookService: BookService) { }
 
-  searchBook() {
+  private searchBook() {
+    if (!this.checkNetwork()) {
+      return;
+    }
+
     // on efface le book pour que l'affichage précédent disparaisse
     this.book = undefined;
 
+    const loading = Loading.create({
+      content: 'Chargement...',
+    });
+    this.nav.present(loading);
+
     this.bookService.searchBook(this.isbn).subscribe(
       data => {
+        loading.dismiss();
+
         console.log('book = ', this.book)
 
         if (data.totalItems == 0) {
-          let alert = Alert.create({
+          const alert = Alert.create({
             title: 'Barcode non reconnu',
             subTitle: 'Ce barcode ne semble pas correspondre à un livre disponible sur Google Book.',
             buttons: ['OK']
@@ -37,6 +48,7 @@ export class AjouterLivrePage {
         }
       },
       err => {
+        loading.dismiss();
         console.log(err);
       },
       () => console.log('Recherche du livre complétée')
@@ -56,24 +68,11 @@ export class AjouterLivrePage {
     return true;
   }
 
-  scan() {
-    if (!this.checkNetwork()) {
-      return;
-    }
-
-    let loading = Loading.create({
-      content: 'Chargement...',
-    });
-
-    this.nav.present(loading);
-
+  private scan() {
     BarcodeScanner.scan().then((barcodeData) => {
-      loading.dismiss();
       this.isbn = barcodeData.text;
       this.searchBook();
-
     }, (err) => {
-      loading.dismiss();
       console.error('une erreur est interceptée', err)
     });
   }

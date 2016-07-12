@@ -27,7 +27,7 @@ export class MesLivresPage {
   }
 
   // données de test
-  initializeItems(){
+  private initializeItems(): void{
     this.items = [
       {
         title: "Jazz piano concepts & techniques",
@@ -97,15 +97,15 @@ export class MesLivresPage {
   }
 
   // fonction de filtre en fonction du filtre catégorie, de l'affichage uniquement des favoris et de l'éventuel requête
-  filterFunction(item){
-    let query = this.query ? this.query : "";
+  private filterFunction(item): boolean{
+    const query = this.query ? this.query : "";
     return item.tag === (this.selectedFilter ? this.selectedFilter : item.tag) &&
         item.favorite === (this.favoritesOnly ? true : item.favorite) &&
         item.title.toLowerCase().indexOf(query.toLowerCase()) > -1;
   }
 
   // filtre à partir du moteur de recherche
-  getItems(event){
+  private getItems(event): void{
     this.initializeItems();
 
     this.query = event.target.value;
@@ -119,48 +119,48 @@ export class MesLivresPage {
   }
 
   // navigation sur la page des détails
-  itemTapped(event, item) {
+  private itemTapped(event, item): void{
     this.nav.push(LivreDetailsPage, {
       item: item
     });
   }
 
   // permet de récupérer l'url d'une grande image d'Amazon à partir d'une petite
-  getUrl(url){
+  private getUrl(url): string{
     return url.replace(/_SS100_\.jpg$/, '_SX350_BO1,204,203,200_.jpg')
   }
 
   // méthode d'affichage avec filtres éventuels
-  filter(){
+  private filter(): void{
     this.initializeItems();
     this.items = this.items.filter((item) => {
         return this.filterFunction(item);
     })
   }
 
-  clickTag(tag){
+  private clickTag(tag: string): void{
       this.selectedFilter = tag;
       this.filter();
   }
 
-  resetFilters(){
+  private resetFilters(): void{
     this.selectedFilter = undefined;
     this.filter();
   }
 
-  resetFavoritesOnly(){
+  private resetFavoritesOnly(): void{
     this.favoritesOnly = undefined;
     this.filter();
   }
 
   // mise en favori ou inversement (attention : cette modification n'est pas persistée pour l'instant 
   // affichage d'un toast pour l'exemple
-  toggleFavorite(item){
+  private toggleFavorite(item): void{
     item.favorite = !item.favorite;
 
-    let msg = item.favorite ? 'Vous avez ajouté un favori' : 'Vous avez supprimé un favori';
+    const msg = item.favorite ? 'Vous avez ajouté un favori' : 'Vous avez supprimé un favori';
 
-    let toast = Toast.create({
+    const toast = Toast.create({
       message : msg,
       duration: 1500
     })

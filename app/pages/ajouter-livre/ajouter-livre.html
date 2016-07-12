@@ -10,10 +10,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-input type="text" [(ngModel)]="isbn" value="" placeholder="Taper un ISBN ou bien utiliser le scan"></ion-input>
-    <button (click)="searchBook()">OK</button>
-  </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col width-80>
+        <!--<ion-input type="tel" maxlength="13" [(ngModel)]="isbn" placeholder="Taper un ISBN ou bien utiliser le scan"></ion-input>-->
+        <ion-input type="tel" [(ngModel)]="isbn" placeholder="Taper un ISBN ou bien utiliser le scan"></ion-input>
+      </ion-col>
+      <ion-col width-20>
+        <button light (click)="searchBook()">OK</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <div padding>
     <button block (click)="scan()">
