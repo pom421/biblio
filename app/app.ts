@@ -3,10 +3,11 @@ import {ionicBootstrap, Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {MesLivresPage} from './pages/mes-livres/mes-livres';
 import {AjouterLivrePage} from './pages/ajouter-livre/ajouter-livre';
-
+import {BookPersistance} from './services/BookPersistance';
 
 @Component({
-  templateUrl: 'build/app.html'
+  templateUrl: 'build/app.html',
+  providers: [BookPersistance]
 })
 class MyApp {
   @ViewChild(Nav) nav: Nav;

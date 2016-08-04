@@ -3,17 +3,21 @@ import {Constants} from '../../constants';
 import {NavController, Loading, Alert} from 'ionic-angular';
 import {BarcodeScanner, Network, Connection} from 'ionic-native';
 import {BookService} from '../../services/BookService';
-import {Book} from '../../models/Book.ts'
+import {BookPersistance} from '../../services/BookPersistance';
+import {Book} from '../../models/Book.ts';
 
 @Component({
   templateUrl: 'build/pages/ajouter-livre/ajouter-livre.html',
-  providers: [Constants, BookService]
+  providers: [Constants, BookService, BookPersistance]
 })
 export class AjouterLivrePage {
   book: Book;
   isbn: string;
 
-  constructor(private nav: NavController, private constants: Constants, private bookService: BookService) { }
+  constructor(private nav: NavController, 
+    private constants: Constants, 
+    private bookService: BookService,
+    private bookPersistance: BookPersistance) { }
 
   private searchBook() {
     if (!this.checkNetwork()) {
@@ -27,6 +31,7 @@ export class AjouterLivrePage {
       content: 'Chargement...',
     });
     this.nav.present(loading);
+
 
     this.bookService.searchBook(this.isbn).subscribe(
       data => {
@@ -43,7 +48,7 @@ export class AjouterLivrePage {
           this.nav.present(alert);
         }
         else {
-          this.book = data;
+          //this.book = data;
           this.book = Book.load(data);
         }
       },
@@ -77,4 +82,8 @@ export class AjouterLivrePage {
     });
   }
 
+  private addBook(book){
+    let res = this.bookPersistance.add(book);
+    console.log('Résultat de l\'ajout du livre', res);
+  }
 }

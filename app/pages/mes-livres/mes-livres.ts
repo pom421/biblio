@@ -1,14 +1,15 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, Toast} from 'ionic-angular';
+import {NavController, NavParams, Platform, Toast} from 'ionic-angular';
 import {LivreDetailsPage} from '../livre-details/livre-details';
 import {Constants} from '../../constants'
+import {BookPersistance} from '../../services/BookPersistance'
 
 @Component({
   templateUrl: 'build/pages/mes-livres/mes-livres.html',
   providers: [Constants]
 })
 export class MesLivresPage {
-  items: Array<{title: string, author: string, date: string, imageUrl: string, favorite: boolean, tag: string}>;
+  items: Array<{ title: string, author: string, date: string, imageUrl: string, favorite: boolean, tag: string }>;
   // la requête dans le moteur de recherche
   query: string;
   // le filtre éventuellement sélectionné
@@ -18,7 +19,11 @@ export class MesLivresPage {
   // le filtre sur les favoris uniquement
   favoritesOnly: boolean;
 
-  constructor(private nav: NavController, navParams: NavParams, private constants: Constants) {
+  constructor(private nav: NavController,
+    navParams: NavParams,
+    private constants: Constants,
+    private platform: Platform,
+    private bookPersistance: BookPersistance) {
     this.initializeItems();
     this.filterOptionsAlert = {
       title: "Catégorie",
@@ -26,8 +31,14 @@ export class MesLivresPage {
     this.favoritesOnly = false;
   }
 
+  ionViewLoaded() {
+    this.platform.ready().then(() => {
+      this.bookPersistance.initDB();
+    });
+  }
+
   // données de test
-  private initializeItems(): void{
+  private initializeItems(): void {
     this.items = [
       {
         title: "Jazz piano concepts & techniques",
@@ -36,7 +47,7 @@ export class MesLivresPage {
         imageUrl: "https://images-eu.ssl-images-amazon.com/images/I/51pHa%2BiqZGL._SS100_.jpg",
         favorite: false,
         tag: "idee-cadeau"
-      }, 
+      },
       {
         title: "La confrérie des éveillés",
         author: "Jacques Attali",
@@ -68,7 +79,7 @@ export class MesLivresPage {
         imageUrl: "https://images-eu.ssl-images-amazon.com/images/I/51Gn%2Be0uAVL._SS100_.jpg",
         favorite: true,
         tag: "a-vendre"
-      }, 
+      },
       {
         title: "Le jour des triffides",
         author: "John Wyndham",
@@ -97,71 +108,71 @@ export class MesLivresPage {
   }
 
   // fonction de filtre en fonction du filtre catégorie, de l'affichage uniquement des favoris et de l'éventuel requête
-  private filterFunction(item): boolean{
+  private filterFunction(item): boolean {
     const query = this.query ? this.query : "";
     return item.tag === (this.selectedFilter ? this.selectedFilter : item.tag) &&
-        item.favorite === (this.favoritesOnly ? true : item.favorite) &&
-        item.title.toLowerCase().indexOf(query.toLowerCase()) > -1;
+      item.favorite === (this.favoritesOnly ? true : item.favorite) &&
+      item.title.toLowerCase().indexOf(query.toLowerCase()) > -1;
   }
 
   // filtre à partir du moteur de recherche
-  private getItems(event): void{
+  private getItems(event): void {
     this.initializeItems();
 
     this.query = event.target.value;
 
     // if the value is an empty string don't filter the items
     //if (val && val.trim() != '') {
-      this.items = this.items.filter((item) => {
-        return this.filterFunction(item);
-      })
+    this.items = this.items.filter((item) => {
+      return this.filterFunction(item);
+    })
     //}
   }
 
   // navigation sur la page des détails
-  private itemTapped(event, item): void{
+  private itemTapped(event, item): void {
     this.nav.push(LivreDetailsPage, {
       item: item
     });
   }
 
   // permet de récupérer l'url d'une grande image d'Amazon à partir d'une petite
-  private getUrl(url): string{
+  private getUrl(url): string {
     return url.replace(/_SS100_\.jpg$/, '_SX350_BO1,204,203,200_.jpg')
   }
 
   // méthode d'affichage avec filtres éventuels
-  private filter(): void{
+  private filter(): void {
     this.initializeItems();
     this.items = this.items.filter((item) => {
-        return this.filterFunction(item);
+      return this.filterFunction(item);
     })
   }
 
-  private clickTag(tag: string): void{
-      this.selectedFilter = tag;
-      this.filter();
+  private clickTag(tag: string): void {
+    this.selectedFilter = tag;
+    this.filter();
   }
 
-  private resetFilters(): void{
+  private resetFilters(): void {
     this.selectedFilter = undefined;
     this.filter();
   }
 
-  private resetFavoritesOnly(): void{
+  private resetFavoritesOnly(): void {
     this.favoritesOnly = undefined;
     this.filter();
   }
 
   // mise en favori ou inversement (attention : cette modification n'est pas persistée pour l'instant 
   // affichage d'un toast pour l'exemple
-  private toggleFavorite(item): void{
+  private toggleFavorite(item): void {
     item.favorite = !item.favorite;
 
     const msg = item.favorite ? 'Vous avez ajouté un favori' : 'Vous avez supprimé un favori';
 
     const toast = Toast.create({
-      message : msg,
+      message: msg,
       duration: 1500
     })
 
