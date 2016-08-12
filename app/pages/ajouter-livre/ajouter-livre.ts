@@ -8,7 +8,7 @@ import {Book} from '../../models/Book.ts';
 
 @Component({
   templateUrl: 'build/pages/ajouter-livre/ajouter-livre.html',
-  providers: [Constants, BookService, BookPersistance]
+  providers: [Constants]
 })
 export class AjouterLivrePage {
   book: Book;
@@ -25,14 +25,16 @@ export class AjouterLivrePage {
     }
 
     // on efface le book pour que l'affichage précédent disparaisse
-    this.book = undefined;
+    this.book = null;
 
     const loading = Loading.create({
       content: 'Chargement...',
     });
     this.nav.present(loading);
 
+    this.book = this.bookService.searchBook(this.isbn);
 
+/*
     this.bookService.searchBook(this.isbn).subscribe(
       data => {
         loading.dismiss();
@@ -58,6 +60,7 @@ export class AjouterLivrePage {
       },
       () => console.log('Recherche du livre complétée')
     );
+  */
   }
 
   private checkNetwork() {
@@ -83,7 +86,12 @@ export class AjouterLivrePage {
   }
 
   private addBook(book){
+    book.doc.tag = 'possede';
     let res = this.bookPersistance.add(book);
     console.log('Résultat de l\'ajout du livre', res);
+  }
+
+  private getBooks(){
+
   }
 }

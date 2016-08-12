@@ -42,19 +42,19 @@
 
     <button ion-item *ngFor="let item of items" detail-push>
       <ion-thumbnail item-left (click)="itemTapped($event, item)">
-        <img src="{{ item.imageUrl }}">
+        <img src="{{ item.doc.smallThumbnail }}">
       </ion-thumbnail>
-      <h3 text-wrap>{{ item.title }}</h3>
-      <p small>{{ item.author }} . {{ item.date }}</p>
+      <h3 text-wrap>{{ item.doc.title }}</h3>
+      <p small>{{ item.doc.author }} . {{ item.doc.date }}</p>
 
       <button clear large item-right (click)="toggleFavorite(item)">
-        <span [ngSwitch]="item.favorite">
+        <span [ngSwitch]="item.doc.favorite">
           <ion-icon name="star-outline" *ngSwitchCase="false"></ion-icon>
           <ion-icon name="star" *ngSwitchCase="true"></ion-icon>
         </span>
       </button>
 
-      <div [ngSwitch]="item.tag" (click)="clickTag(item.tag)">
+      <div [ngSwitch]="item.doc.tag" (click)="clickTag(item.doc.tag)">
         <button outline round small danger *ngSwitchCase="'idee-cadeau'">idée cadeau</button>
         <button outline round small secondary *ngSwitchCase="'a-vendre'">à vendre</button>
         <button outline round small primary *ngSwitchDefault>possède</button>

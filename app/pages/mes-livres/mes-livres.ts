@@ -2,14 +2,18 @@ import {Component} from '@angular/core';
 import {NavController, NavParams, Platform, Toast} from 'ionic-angular';
 import {LivreDetailsPage} from '../livre-details/livre-details';
 import {Constants} from '../../constants'
+import {BookService} from '../../services/BookService'
 import {BookPersistance} from '../../services/BookPersistance'
+import {Book} from '../../models/Book'
 
 @Component({
   templateUrl: 'build/pages/mes-livres/mes-livres.html',
   providers: [Constants]
 })
 export class MesLivresPage {
-  items: Array<{ title: string, author: string, date: string, imageUrl: string, favorite: boolean, tag: string }>;
+  //items: Array<{ title: string, authors: Array<string>, date: string, smallThumbnail: string, favorite: boolean, tag: string }>;
+  items: Array<any>;
+
   // la requête dans le moteur de recherche
   query: string;
   // le filtre éventuellement sélectionné
@@ -20,10 +24,12 @@ export class MesLivresPage {
   favoritesOnly: boolean;
 
   constructor(private nav: NavController,
-    navParams: NavParams,
+    private navParams: NavParams,
     private constants: Constants,
     private platform: Platform,
+    private bookService: BookService,
     private bookPersistance: BookPersistance) {
+      console.log('dans mes livres page')
     this.initializeItems();
     this.filterOptionsAlert = {
       title: "Catégorie",
@@ -31,88 +37,103 @@ export class MesLivresPage {
     this.favoritesOnly = false;
   }
 
-  ionViewLoaded() {
-    this.platform.ready().then(() => {
-      this.bookPersistance.initDB();
-    });
-  }
-
   // données de test
   private initializeItems(): void {
-    this.items = [
-      {
-        title: "Jazz piano concepts & techniques",
-        author: "John Valerio",
-        date: "1998",
-        imageUrl: "https://images-eu.ssl-images-amazon.com/images/I/51pHa%2BiqZGL._SS100_.jpg",
-        favorite: false,
-        tag: "idee-cadeau"
-      },
-      {
-        title: "La confrérie des éveillés",
-        author: "Jacques Attali",
-        date: "2006",
-        imageUrl: "https://images-eu.ssl-images-amazon.com/images/I/517y9kwvOeL._SS100_.jpg",
-        favorite: false,
-        tag: "a-vendre"
-      },
-      {
-        title: "Orage d'acier",
-        author: "Ernst Jünger",
-        date: "2002",
-        imageUrl: "https://images-eu.ssl-images-amazon.com/images/I/41KLqOoG4cL._SS100_.jpg",
-        favorite: true,
-        tag: "possede"
-      },
-      {
-        title: "Bienvenue au club",
-        author: "Johnatan Coe",
-        date: "2004",
-        imageUrl: "https://images-eu.ssl-images-amazon.com/images/I/51nClspGIEL._SS100_.jpg",
-        favorite: false,
-        tag: "possede"
-      },
-      {
-        title: "Ça",
-        author: "Stephen King",
-        date: "2002",
-        imageUrl: "https://images-eu.ssl-images-amazon.com/images/I/51Gn%2Be0uAVL._SS100_.jpg",
-        favorite: true,
-        tag: "a-vendre"
-      },
-      {
-        title: "Le jour des triffides",
-        author: "John Wyndham",
-        date: "2007",
-        imageUrl: "https://images-eu.ssl-images-amazon.com/images/I/51GKAuci--L._SS100_.jpg",
-        favorite: true,
-        tag: "possede"
-      },
-      {
-        title: "Le troisième chimpanzé: Essai sur l'évolution et l'avenir de l'animal humain",
-        author: "Jared Diamond",
-        date: "2011",
-        imageUrl: "https://images-eu.ssl-images-amazon.com/images/I/51k7n-PEvCL._SS100_.jpg",
-        favorite: false,
-        tag: "idee-cadeau"
-      },
-      {
-        title: "Cujo",
-        author: "Stephen King",
-        date: "1983",
-        imageUrl: "https://images-eu.ssl-images-amazon.com/images/I/519yvrnYP2L._SS100_.jpg",
-        favorite: false,
-        tag: "a-vendre"
-      },
-    ];
+    if (this.bookPersistance.getAll()) {
+      this.items = this.bookPersistance.getAll().rows;
+    }
+    else {
+      this.items = [
+        {
+          doc: {
+            title: "Jazz piano concepts & techniques",
+            authors: ["John Valerio"],
+            date: "1998",
+            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/51pHa%2BiqZGL._SS100_.jpg",
+            favorite: false,
+            tag: "idee-cadeau"
+          }
+        },
+        {
+          doc: {
+            title: "La confrérie des éveillés",
+            authors: ["Jacques Attali"],
+            date: "2006",
+            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/517y9kwvOeL._SS100_.jpg",
+            favorite: false,
+            tag: "a-vendre"
+          }
+        },
+        {
+          doc: {
+            title: "Orage d'acier",
+            authors: ["Ernst Jünger"],
+            date: "2002",
+            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/41KLqOoG4cL._SS100_.jpg",
+            favorite: true,
+            tag: "possede"
+          }
+        },
+        {
+          doc: {
+            title: "Bienvenue au club",
+            authors: ["Johnatan Coe"],
+            date: "2004",
+            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/51nClspGIEL._SS100_.jpg",
+            favorite: false,
+            tag: "possede"
+          }
+        },
+        {
+          doc: {
+            title: "Ça",
+            authors: ["Stephen King"],
+            date: "2002",
+            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/51Gn%2Be0uAVL._SS100_.jpg",
+            favorite: true,
+            tag: "a-vendre"
+          }
+        },
+        {
+          doc: {
+            title: "Le jour des triffides",
+            authors: ["John Wyndham"],
+            date: "2007",
+            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/51GKAuci--L._SS100_.jpg",
+            favorite: true,
+            tag: "possede"
+          }
+        },
+        {
+          doc: {
+            title: "Le troisième chimpanzé: Essai sur l'évolution et l'avenir de l'animal humain",
+            authors: ["Jared Diamond"],
+            date: "2011",
+            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/51k7n-PEvCL._SS100_.jpg",
+            favorite: false,
+            tag: "idee-cadeau"
+          }
+        },
+        {
+          doc: {
+            title: "Cujo",
+            authors: ["Stephen King"],
+            date: "1983",
+            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/519yvrnYP2L._SS100_.jpg",
+            favorite: false,
+            tag: "a-vendre"
+          }
+        },
+      ];
+    }
   }
 
   // fonction de filtre en fonction du filtre catégorie, de l'affichage uniquement des favoris et de l'éventuel requête
   private filterFunction(item): boolean {
     const query = this.query ? this.query : "";
-    return item.tag === (this.selectedFilter ? this.selectedFilter : item.tag) &&
-      item.favorite === (this.favoritesOnly ? true : item.favorite) &&
-      item.title.toLowerCase().indexOf(query.toLowerCase()) > -1;
+    return item.doc.tag === (this.selectedFilter ? this.selectedFilter : item.doc.tag) &&
+      item.doc.favorite === (this.favoritesOnly ? true : item.doc.favorite) &&
+      item.doc.title.toLowerCase().indexOf(query.toLowerCase()) > -1;
   }
 
   // filtre à partir du moteur de recherche
@@ -155,19 +176,19 @@ export class MesLivresPage {
   }
 
   private resetFilters(): void {
-    this.selectedFilter = undefined;
+    this.selectedFilter = null;
     this.filter();
   }
 
   private resetFavoritesOnly(): void {
-    this.favoritesOnly = undefined;
+    this.favoritesOnly = null;
     this.filter();
   }
 
   // mise en favori ou inversement (attention : cette modification n'est pas persistée pour l'instant 
   // affichage d'un toast pour l'exemple
   private toggleFavorite(item): void {
-    item.favorite = !item.favorite;
+    item.doc.favorite = !item.favorite;
 
     const msg = item.favorite ? 'Vous avez ajouté un favori' : 'Vous avez supprimé un favori';
 

@@ -15,7 +15,7 @@ export class LivreDetailsPage {
   }
 
   urlLargerImg(item){
-    return item.imageUrl.replace(/_SS100_\.jpg$/, '_SX350_BO1,204,203,200_.jpg');
+    return item.smallThumbnail.replace(/_SS100_\.jpg$/, '_SX350_BO1,204,203,200_.jpg');
   }
 
 }

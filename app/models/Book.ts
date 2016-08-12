@@ -12,6 +12,8 @@ export class Book {
   smallThumbnail: string;
   thumbnail: string;
   pageCount: number;
+  favorite: boolean;
+  tag: string;
 
   // remplit un Book à partir des données issues de Google Book API
   static load(data): Book {
