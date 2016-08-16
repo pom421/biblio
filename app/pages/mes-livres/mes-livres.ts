@@ -30,19 +30,26 @@ export class MesLivresPage {
     private bookService: BookService,
     private bookPersistance: BookPersistance) {
       console.log('dans mes livres page')
-    this.initializeItems();
-    this.filterOptionsAlert = {
-      title: "Catégorie",
-    }
-    this.favoritesOnly = false;
+      this.refreshListItems();
+      this.filterOptionsAlert = {
+        title: "Catégorie",
+      }
+      this.favoritesOnly = false;
   }
 
   // données de test
-  private initializeItems(): void {
+  private refreshListItems(): void {
+    console.log('au début de refreshListItems')
+    this.bookPersistance.getAll(docs => {
+      this.items = docs;
+    })
+    /*
     if (this.bookPersistance.getAll()) {
+      console.log('dans le if de refreshListItems')
       this.items = this.bookPersistance.getAll().rows;
     }
     else {
+      console.log('dans le else de refreshListItems')
       this.items = [
         {
           doc: {
@@ -125,7 +132,7 @@ export class MesLivresPage {
           }
         },
       ];
-    }
+    }*/
   }
 
   // fonction de filtre en fonction du filtre catégorie, de l'affichage uniquement des favoris et de l'éventuel requête
@@ -138,7 +145,7 @@ export class MesLivresPage {
 
   // filtre à partir du moteur de recherche
   private getItems(event): void {
-    this.initializeItems();
+    this.refreshListItems();
 
     this.query = event.target.value;
 
@@ -164,7 +171,7 @@ export class MesLivresPage {
 
   // méthode d'affichage avec filtres éventuels
   private filter(): void {
-    this.initializeItems();
+    this.refreshListItems();
     this.items = this.items.filter((item) => {
       return this.filterFunction(item);
     })

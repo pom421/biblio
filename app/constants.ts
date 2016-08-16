@@ -8,7 +8,7 @@ export class Constants {
   categories: any;
   // Clé d'API pour le WS Google Book API
   static APIKEY = 'AIzaSyCGFRV46y5dGqtjNCDEAigGX725UU-Cy8s';
-  static NETWORK_OK: Array<Connection> =  [Connection.ETHERNET, Connection.WIFI, Connection.CELL];
+  static NETWORK_OK: Array<Connection> =  [Connection.ETHERNET, Connection.WIFI, Connection.CELL, Connection.CELL_2G, Connection.CELL_3G, Connection.CELL_4G];
 
   constructor(){
     this.categories = {

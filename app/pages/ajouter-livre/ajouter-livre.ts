@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Constants} from '../../constants';
-import {NavController, Loading, Alert} from 'ionic-angular';
-import {BarcodeScanner, Network, Connection} from 'ionic-native';
+import {Alert, Loading, NavController, Toast} from 'ionic-angular';
+import {BarcodeScanner, Connection, Network} from 'ionic-native';
 import {BookService} from '../../services/BookService';
 import {BookPersistance} from '../../services/BookPersistance';
 import {Book} from '../../models/Book.ts';
@@ -32,16 +32,17 @@ export class AjouterLivrePage {
     });
     this.nav.present(loading);
 
-    this.book = this.bookService.searchBook(this.isbn);
+    // mauvais pattern pour de l'asynchrone
+    // this.book = this.bookService.searchBook(this.isbn);
 
-/*
-    this.bookService.searchBook(this.isbn).subscribe(
-      data => {
+    // version avec callback
+    // this.bookService.searchBook(this.isbn, book => this.book = book);
+
+    // version avec promesse
+    this.bookService.searchBook(this.isbn).then(book => {
         loading.dismiss();
 
-        console.log('book = ', this.book)
-
-        if (data.totalItems == 0) {
+        if (!book) {
           const alert = Alert.create({
             title: 'Barcode non reconnu',
             subTitle: 'Ce barcode ne semble pas correspondre à un livre disponible sur Google Book.',
@@ -49,18 +50,13 @@ export class AjouterLivrePage {
           });
           this.nav.present(alert);
         }
-        else {
-          //this.book = data;
-          this.book = Book.load(data);
+        else{
+          this.book = Book.load(book);
         }
-      },
-      err => {
+      }).catch(err => {
         loading.dismiss();
-        console.log(err);
-      },
-      () => console.log('Recherche du livre complétée')
-    );
-  */
+        console.error(err);
+      });
   }
 
   private checkNetwork() {
@@ -86,9 +82,18 @@ export class AjouterLivrePage {
   }
 
   private addBook(book){
-    book.doc.tag = 'possede';
-    let res = this.bookPersistance.add(book);
-    console.log('Résultat de l\'ajout du livre', res);
+    // tag par défaut, pourra être changé plus tard par l'utilisateur
+    book.tag = 'possede';
+    this.bookPersistance.add(book).then(res => {
+      console.log('Résultat de l\'ajout du livre', res);
+      const toast = Toast.create({
+      message: 'Livre ajouté à votre bibliothèque',
+      duration: 1500
+    })
+
+    this.nav.present(toast);
+
+    }).catch(err => console.error);
   }
 
   private getBooks(){
