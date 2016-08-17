@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Toast } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import {BookPersistance} from '../../services/BookPersistance';
 
 /*
@@ -13,7 +13,9 @@ import {BookPersistance} from '../../services/BookPersistance';
 })
 export class SupprimerLivresPage {
 
-  constructor(private nav: NavController, private bookPersistance: BookPersistance) {
+  constructor(private nav: NavController, 
+    private bookPersistance: BookPersistance,
+    private toastController: ToastController) {
 
   }
 
@@ -21,12 +23,12 @@ export class SupprimerLivresPage {
     console.log('Attention : vous voulez supprimer tous les livres!!')
     this.bookPersistance.deleteAll()
 
-    const toast = Toast.create({
+    const toast = this.toastController.create({
       message: "Vos livres ont bien été supprimés",
       duration: 2000
     });
 
-    this.nav.present(toast);
+    toast.present();
   }
 
 }

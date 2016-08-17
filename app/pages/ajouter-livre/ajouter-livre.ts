@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Constants} from '../../constants';
-import {Alert, Loading, NavController, Toast} from 'ionic-angular';
+import {AlertController, LoadingController, NavController, ToastController} from 'ionic-angular';
 import {BarcodeScanner, Connection, Network} from 'ionic-native';
 import {BookService} from '../../services/BookService';
 import {BookPersistance} from '../../services/BookPersistance';
@@ -17,7 +17,10 @@ export class AjouterLivrePage {
   constructor(private nav: NavController, 
     private constants: Constants, 
     private bookService: BookService,
-    private bookPersistance: BookPersistance) { }
+    private bookPersistance: BookPersistance,
+    private alertController: AlertController,
+    private loadingController: LoadingController,
+    private toastController: ToastController) { }
 
   private searchBook() {
     if (!this.checkNetwork()) {
@@ -27,10 +30,10 @@ export class AjouterLivrePage {
     // on efface le book pour que l'affichage précédent disparaisse
     this.book = null;
 
-    const loading = Loading.create({
+    const loading = this.loadingController.create({
       content: 'Chargement...',
     });
-    this.nav.present(loading);
+    loading.present();
 
     // mauvais pattern pour de l'asynchrone
     // this.book = this.bookService.searchBook(this.isbn);
@@ -43,12 +46,12 @@ export class AjouterLivrePage {
         loading.dismiss();
 
         if (!book) {
-          const alert = Alert.create({
+          const alert = this.alertController.create({
             title: 'Barcode non reconnu',
             subTitle: 'Ce barcode ne semble pas correspondre à un livre disponible sur Google Book.',
             buttons: ['OK']
           });
-          this.nav.present(alert);
+          alert.present();
         }
         else{
           this.book = Book.load(book);
@@ -61,12 +64,12 @@ export class AjouterLivrePage {
 
   private checkNetwork() {
     if (Constants.NETWORK_OK.indexOf(Network.connection) === -1) {
-      let alert = Alert.create({
+      let alert = this.alertController.create({
         title: 'Connexion réseau impossible',
         subTitle: 'Vous devez être connecté au réseau pour pouvoir scanner un barcode.',
         buttons: ['OK']
       });
-      this.nav.present(alert);
+      alert.present();
       return false;
     }
     return true;
@@ -87,18 +90,13 @@ export class AjouterLivrePage {
       this.book.tag = 'possede';
       this.bookPersistance.add(this.book).then(res => {
         console.log('Résultat de l\'ajout du livre', res);
-        const toast = Toast.create({
-        message: 'Livre ajouté à votre bibliothèque',
-        duration: 2000
-      })
-
-      this.nav.present(toast);
-
+        const toast = this.toastController.create({
+          message: 'Livre ajouté à votre bibliothèque',
+          duration: 2000
+        })
+        toast.present();
       }).catch(err => console.error);
     }
   }
 
-  private getBooks(){
-
-  }
 }

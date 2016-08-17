@@ -14,12 +14,13 @@ export class DebugDetailsPage {
   item: any;
 
   constructor(private nav: NavController,
-    private navParams: NavParams) {
+    private navParams: NavParams,
+    private alertController: AlertController) {
       this.item = navParams.get('item');
   }
 
   showSrc(){
-    const alert = AlertController.create({
+    const alert = this.alertController.create({
       title: 'Source du thumbnail',
       subTitle: this.item.doc.thumbnail,
       buttons: ['OK']

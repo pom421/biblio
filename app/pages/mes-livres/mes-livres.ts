@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, Platform, Toast} from 'ionic-angular';
+import {NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 import {LivreDetailsPage} from '../livre-details/livre-details';
 import {Constants} from '../../constants'
 import {BookService} from '../../services/BookService'
@@ -28,7 +28,8 @@ export class MesLivresPage {
     private constants: Constants,
     private platform: Platform,
     private bookService: BookService,
-    private bookPersistance: BookPersistance) {
+    private bookPersistance: BookPersistance,
+    private toastController: ToastController) {
       console.log('dans mes livres page')
       this.refreshListItems();
       this.filterOptionsAlert = {
@@ -199,11 +200,11 @@ export class MesLivresPage {
 
     const msg = item.doc.favorite ? 'Vous avez ajouté un favori' : 'Vous avez supprimé un favori';
 
-    const toast = Toast.create({
+    const toast = this.toastController.create({
       message: msg,
       duration: 1500
     })
 
-    this.nav.present(toast);
+    toast.present();
   }
 }

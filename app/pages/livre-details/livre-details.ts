@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, Toast} from 'ionic-angular';
+import {NavController, NavParams, ToastController} from 'ionic-angular';
 import {Constants} from '../../constants'
 import {BookPersistance} from '../../services/BookPersistance'
 
@@ -14,7 +14,8 @@ export class LivreDetailsPage {
   constructor(private nav: NavController, 
     navParams: NavParams, 
     private constants: Constants,
-    private bookPersistance: BookPersistance) {
+    private bookPersistance: BookPersistance,
+    private toastController: ToastController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
     this.filterOptionsAlert = {
@@ -35,12 +36,12 @@ export class LivreDetailsPage {
 
     const msg = item.doc.favorite ? 'Vous avez ajouté un favori' : 'Vous avez supprimé un favori';
 
-    const toast = Toast.create({
+    const toast = this.toastController.create({
       message: msg,
       duration: 1500
     })
 
-    this.nav.present(toast);
+    toast.present();
   }
 
 }
