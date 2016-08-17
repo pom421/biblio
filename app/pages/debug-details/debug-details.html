@@ -1,0 +1,40 @@
+<!--
+  Generated template for the DebugDetailsPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Détails</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  Id : {{ item.doc._id }}<br>
+  Rev : {{ item.doc._rev }}<br>
+  Title : {{ item.doc.title }}<br>
+  
+  Authors :
+  <span *ngFor="let author of item.doc.authors">
+    {{ author }}
+  </span>
+  Publisher: {{ item.doc.publisher }}<br>
+  Date : {{ item.doc.date }}<br>
+  ISBN 10 : {{ item.doc.isbn-10 }}<br>
+  ISBN 13 : {{ item.doc.isbn-13 }}<br>
+  SmallThumbnail : {{ item.doc.smallThumbnail }}<br>
+  Thumbnail : {{ item.doc.thumbnail }}<br>
+  Page count : {{ item.doc.pageCount }}<br>
+  Favorite : {{ item.doc.favorite }}<br>
+  Tag : {{ item.doc.tag }}<br>
+
+  <p>Thumbnail</p>  
+  <img [src]="item.doc.thumbnail" [alt]="item.doc.thumbnail" (click)="showSrc()">
+
+</ion-content>
+

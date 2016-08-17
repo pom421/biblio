@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Toast } from 'ionic-angular';
 import {BookPersistance} from '../../services/BookPersistance';
 
 /*
@@ -20,6 +20,13 @@ export class SupprimerLivresPage {
   deleteBooks(){
     console.log('Attention : vous voulez supprimer tous les livres!!')
     this.bookPersistance.deleteAll()
+
+    const toast = Toast.create({
+      message: "Vos livres ont bien été supprimés",
+      duration: 2000
+    });
+
+    this.nav.present(toast);
   }
 
 }

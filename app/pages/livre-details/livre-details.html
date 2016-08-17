@@ -10,30 +10,35 @@
 <ion-content>
   <ion-card *ngIf="selectedItem" class="selection">
     <!--<img src="{{ selectedItem.imageUrl }}" alt="">-->
-    <img [src]="urlLargerImg(selectedItem)" small>
-    <ion-card-content>
-      <b>{{ selectedItem.title }}</b> - {{ selectedItem.date }}
-      <div>
-        {{ selectedItem.author }}
-      </div>
+    <img [src]="urlLargerImg(selectedItem)" style="width: 40%; inline: true">
+    <b>{{ selectedItem.doc.title }}</b> - {{ selectedItem.doc.date }}
+    <p>
+      <span *ngFor="let author of selectedItem.doc.authors">
+        {{ author }}
+      </span>
+    </p>
 
+    <ion-card-content>
+      <p>{{ selectedItem.doc.description }}</p>
     </ion-card-content>
+
     <ion-row no-padding>
       <ion-col>
         <button clear large danger (click)="toggleFavorite(selectedItem)">
-          <span [ngSwitch]="selectedItem.favorite">
+          <span [ngSwitch]="selectedItem.doc.favorite">
             <ion-icon name="star-outline" *ngSwitchCase="false"></ion-icon>
+            <!--<ion-icon name="star-outline" *ngSwitchCase="false"></ion-icon>-->
             <ion-icon name="star" *ngSwitchCase="true"></ion-icon>
-            Favori
           </span>
         </button>
       </ion-col>
       <ion-col>
-      <ion-select item-right [(ngModel)]="selectedItem.tag" cancelText="Annuler" (ionChange)="filter()" [alertOptions]="filterOptionsAlert">
-          <ion-option value="possede">{{ constants.categories["possede"] }}</ion-option>
-          <ion-option value="a-vendre">{{ constants.categories["a-vendre"] }}</ion-option>
-          <ion-option value="idee-cadeau">{{ constants.categories["idee-cadeau"] }}</ion-option>
-        </ion-select>
+        <!--<ion-select item-right [(ngModel)]="selectedItem.doc.tag" cancelText="Annuler" (ionChange)="filter()" [alertOptions]="filterOptionsAlert">
+            <ion-option value="possede">{{ constants.categories["possede"] }}</ion-option>
+            <ion-option value="a-vendre">{{ constants.categories["a-vendre"] }}</ion-option>
+            <ion-option value="idee-cadeau">{{ constants.categories["idee-cadeau"] }}</ion-option>
+        </ion-select>-->
+        toto est le plus azeaze
       </ion-col>
     </ion-row>
   </ion-card>

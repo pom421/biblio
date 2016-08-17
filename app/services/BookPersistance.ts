@@ -39,6 +39,10 @@ export class BookPersistance {
     return BookPersistance.db.post(book);
   }
 
+  upd(book){
+    return BookPersistance.db.put(book, book.id, book._rev);
+  }
+
   // faux car il faut imbriquer un callback pour exécuter le traitement de remplissage de this.items (de MesLivresPage) seulement quand le then est lancé
   getAllOld() {
     if (!this.books) {

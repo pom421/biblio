@@ -45,7 +45,7 @@
         <img src="{{ item.doc.smallThumbnail }}">
       </ion-thumbnail>
       <h3 text-wrap>{{ item.doc.title }}</h3>
-      <p small>{{ item.doc.author }} . {{ item.doc.date }}</p>
+      <p small>{{ item.doc.date }}</p>
 
       <button clear large item-right (click)="toggleFavorite(item)">
         <span [ngSwitch]="item.doc.favorite">

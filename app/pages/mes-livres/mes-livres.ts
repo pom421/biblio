@@ -195,9 +195,9 @@ export class MesLivresPage {
   // mise en favori ou inversement (attention : cette modification n'est pas persistée pour l'instant 
   // affichage d'un toast pour l'exemple
   private toggleFavorite(item): void {
-    item.doc.favorite = !item.favorite;
+    item.doc.favorite = !item.doc.favorite;
 
-    const msg = item.favorite ? 'Vous avez ajouté un favori' : 'Vous avez supprimé un favori';
+    const msg = item.doc.favorite ? 'Vous avez ajouté un favori' : 'Vous avez supprimé un favori';
 
     const toast = Toast.create({
       message: msg,

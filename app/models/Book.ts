@@ -40,10 +40,17 @@ export class Book {
         }
       }
       if (data.items[0].volumeInfo.imageLinks) {
-        book.smallThumbnail = data.items[0].volumeInfo.imageLinks.smallThumbnail;
-        book.thumbnail = data.items[0].volumeInfo.imageLinks.thumbnail;
+        if (!data.items[0].volumeInfo.imageLinks.thumbnail){
+          book.thumbnail = '../../resources/empty-thumbnail.png';
+          book.smallThumbnail = '../../resources/empty-thumbnail.png';
+        }
+        else {
+          book.thumbnail = data.items[0].volumeInfo.imageLinks.thumbnail;
+          book.smallThumbnail = data.items[0].volumeInfo.imageLinks.smallThumbnail;
+        }
       }
       book.pageCount = data.items[0].volumeInfo.pageCount;
+      book.favorite = false;
     }
 
     return book;

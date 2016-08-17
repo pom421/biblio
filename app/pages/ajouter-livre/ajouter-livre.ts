@@ -81,19 +81,21 @@ export class AjouterLivrePage {
     });
   }
 
-  private addBook(book){
-    // tag par défaut, pourra être changé plus tard par l'utilisateur
-    book.tag = 'possede';
-    this.bookPersistance.add(book).then(res => {
-      console.log('Résultat de l\'ajout du livre', res);
-      const toast = Toast.create({
-      message: 'Livre ajouté à votre bibliothèque',
-      duration: 1500
-    })
+  private addBook(){
+    if (this.book){
+      // tag par défaut, pourra être changé plus tard par l'utilisateur
+      this.book.tag = 'possede';
+      this.bookPersistance.add(this.book).then(res => {
+        console.log('Résultat de l\'ajout du livre', res);
+        const toast = Toast.create({
+        message: 'Livre ajouté à votre bibliothèque',
+        duration: 2000
+      })
 
-    this.nav.present(toast);
+      this.nav.present(toast);
 
-    }).catch(err => console.error);
+      }).catch(err => console.error);
+    }
   }
 
   private getBooks(){

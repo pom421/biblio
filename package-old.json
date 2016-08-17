@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "@angular/common": "^2.0.0-rc.3",
-    "@angular/compiler": "^2.0.0-rc.3",
-    "@angular/core": "^2.0.0-rc.3",
-    "@angular/http": "^2.0.0-rc.3",
-    "@angular/platform-browser": "^2.0.0-rc.3",
-    "@angular/platform-browser-dynamic": "^2.0.0-rc.3",
+    "@angular/common": "2.0.0-rc.3",
+    "@angular/compiler": "2.0.0-rc.3",
+    "@angular/core": "2.0.0-rc.3",
+    "@angular/http": "2.0.0-rc.3",
+    "@angular/platform-browser": "2.0.0-rc.3",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.3",
     "cordova": "^6.2.0",
     "es6-shim": "^0.35.0",
     "ionic": "^2.0.0-beta.32",

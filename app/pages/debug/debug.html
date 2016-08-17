@@ -1,0 +1,27 @@
+<!--
+  Generated template for the DebugPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Debug PouchDB</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let item of items" (click)="selectItem(item)">
+      <h3>{{ item.doc._id }}</h3>
+      <h4>(rev: {{ item.doc._rev }}</h4>
+      <p>{{ item.doc.title }}</p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

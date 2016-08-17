@@ -4,6 +4,7 @@ import {StatusBar} from 'ionic-native';
 import {MesLivresPage} from './pages/mes-livres/mes-livres';
 import {AjouterLivrePage} from './pages/ajouter-livre/ajouter-livre';
 import {SupprimerLivresPage} from './pages/supprimer-livres/supprimer-livres';
+import {DebugPage} from './pages/debug/debug';
 import {BookPersistance} from './services/BookPersistance';
 import {BookService} from './services/BookService';
 
@@ -29,7 +30,8 @@ class MyApp {
     this.pages = [
       { title: 'Mes Livres', component: MesLivresPage },
       { title: 'Ajouter un livre', component: AjouterLivrePage },
-      { title: 'Supprimer mes livres', component: SupprimerLivresPage }
+      { title: 'Supprimer mes livres', component: SupprimerLivresPage },
+      { title: 'Debug', component: DebugPage }
     ];
     console.log('dans MyApp : bookPersistance : ', bookPersistance);
     console.log('dans MyApp : menuController : ', menu);
