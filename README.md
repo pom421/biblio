@@ -1,20 +1,20 @@
-### Biblio
+# Biblio
 
 Biblio est une application de gestion personnelle de livres. Elle permet de scanner les codes bar des livres de sa bibliothèque, de les organiser en catégorie, ajouter des favoris, filtrer, voir les détails (auteurs, image, etc..).
 
-Utilisation de :
+## Architecture
 
 - Ionic 2
 - PouchDB
 - TypeScript
 - Google Book API pour accès aux informations des livres via REST
 
-#### Prérequis
+## Prérequis
 
 - Git
 - node & npm
 
-#### Installation
+## Installation
 
 ```sh
 $ git clone https://github.com/pom421/biblio.git
