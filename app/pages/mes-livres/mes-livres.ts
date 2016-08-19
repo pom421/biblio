@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, Platform, ToastController} from 'ionic-angular';
+import {NavController, NavParams, Platform, ToastController, ViewController} from 'ionic-angular';
 import {LivreDetailsPage} from '../livre-details/livre-details';
 import {Constants} from '../../constants'
 import {BookService} from '../../services/BookService'
@@ -29,13 +29,16 @@ export class MesLivresPage {
     private platform: Platform,
     private bookService: BookService,
     private bookPersistance: BookPersistance,
-    private toastController: ToastController) {
+    private toastController: ToastController,
+    private viewController: ViewController) {
       console.log('dans mes livres page')
       this.refreshListItems();
       this.filterOptionsAlert = {
         title: "Catégorie",
       }
       this.favoritesOnly = false;
+      console.log('index MesLivresPages', this.viewController.index);
+      
   }
 
   // données de test
@@ -139,9 +142,9 @@ export class MesLivresPage {
   // fonction de filtre en fonction du filtre catégorie, de l'affichage uniquement des favoris et de l'éventuel requête
   private filterFunction(item): boolean {
     const query = this.query ? this.query : "";
-    return item.doc.tag === (this.selectedFilter ? this.selectedFilter : item.doc.tag) &&
-      item.doc.favorite === (this.favoritesOnly ? true : item.doc.favorite) &&
-      item.doc.title.toLowerCase().indexOf(query.toLowerCase()) > -1;
+    return item.tag === (this.selectedFilter ? this.selectedFilter : item.tag) &&
+      item.favorite === (this.favoritesOnly ? true : item.favorite) &&
+      item.title.toLowerCase().indexOf(query.toLowerCase()) > -1;
   }
 
   // filtre à partir du moteur de recherche
@@ -162,7 +165,7 @@ export class MesLivresPage {
   private itemTapped(event, item): void {
     this.nav.push(LivreDetailsPage, {
       item: item
-    });
+    })
   }
 
   // permet de récupérer l'url d'une grande image d'Amazon à partir d'une petite
@@ -196,9 +199,9 @@ export class MesLivresPage {
   // mise en favori ou inversement (attention : cette modification n'est pas persistée pour l'instant 
   // affichage d'un toast pour l'exemple
   private toggleFavorite(item): void {
-    item.doc.favorite = !item.doc.favorite;
+    item.favorite = !item.favorite;
 
-    const msg = item.doc.favorite ? 'Vous avez ajouté un favori' : 'Vous avez supprimé un favori';
+    const msg = item.favorite ? 'Vous avez ajouté un favori' : 'Vous avez supprimé un favori';
 
     const toast = this.toastController.create({
       message: msg,

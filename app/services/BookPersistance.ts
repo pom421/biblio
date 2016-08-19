@@ -36,11 +36,24 @@ export class BookPersistance {
   }
 
   add(book) {
-    return BookPersistance.db.post(book);
+    return BookPersistance.db.post(book).then(res => {
+      console.log('Résultat de l\'ajout', res);
+      return res;
+    }).catch(err => {
+      console.error('Erreur lors de l\'ajout', err);
+      return err;
+    });
   }
 
-  upd(book){
-    return BookPersistance.db.put(book, book.id, book._rev);
+  upd(book): Promise<any>{
+    //return BookPersistance.db.put(book, {_id: book.doc._id, _rev : book.doc._rev});
+    return BookPersistance.db.put(book).then(res => {
+      console.log('Résultat de la maj', res);
+      return res;
+    }).catch(err => {
+      console.error('Erreur lors de la maj', err);
+      return err;
+    })
   }
 
   // faux car il faut imbriquer un callback pour exécuter le traitement de remplissage de this.items (de MesLivresPage) seulement quand le then est lancé
@@ -61,9 +74,15 @@ export class BookPersistance {
 
   // bon car générique. Chaque appelant pourra mettre le traitement qu'il souhaite via le callback
   getAll(callback){
+    let data = [];
     BookPersistance.db.allDocs({ include_docs: true})
-      .then(docs => callback(docs.rows))
-      .catch(err => console.error)
+      .then(result => {
+        result.rows.map(row => {
+          data.push(row.doc);
+        })
+        callback(data);
+      })
+      .catch(err => console.error);
   }
 
   deleteAll(){

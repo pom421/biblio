@@ -22,7 +22,7 @@ export class DebugDetailsPage {
   showSrc(){
     const alert = this.alertController.create({
       title: 'Source du thumbnail',
-      subTitle: this.item.doc.thumbnail,
+      subTitle: this.item.thumbnail,
       buttons: ['OK']
     });
 

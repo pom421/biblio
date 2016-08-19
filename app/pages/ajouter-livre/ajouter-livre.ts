@@ -55,11 +55,12 @@ export class AjouterLivrePage {
         }
         else{
           this.book = Book.load(book);
+          console.log('this.book trouvé', this.book)
         }
       }).catch(err => {
         loading.dismiss();
         console.error(err);
-      });
+      }); 
   }
 
   private checkNetwork() {
@@ -88,12 +89,13 @@ export class AjouterLivrePage {
     if (this.book){
       // tag par défaut, pourra être changé plus tard par l'utilisateur
       this.book.tag = 'possede';
+      console.log('this.book dans addbook', this.book)
       this.bookPersistance.add(this.book).then(res => {
         console.log('Résultat de l\'ajout du livre', res);
         const toast = this.toastController.create({
           message: 'Livre ajouté à votre bibliothèque',
           duration: 2000
-        })
+        });
         toast.present();
       }).catch(err => console.error);
     }

@@ -2,6 +2,8 @@
  * Classe modèle représentant un livre 
  */
 export class Book {
+  _id;
+  _rev;
   authors: Array<string>;
   publisher: string;
   title: string;

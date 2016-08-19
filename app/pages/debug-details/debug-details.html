@@ -15,26 +15,26 @@
 </ion-header>
 
 <ion-content padding>
-  Id : {{ item.doc._id }}<br>
-  Rev : {{ item.doc._rev }}<br>
-  Title : {{ item.doc.title }}<br>
+  Id : {{ item._id }}<br>
+  Rev : {{ item._rev }}<br>
+  Title : {{ item.title }}<br>
   
   Authors :
-  <span *ngFor="let author of item.doc.authors">
+  <span *ngFor="let author of item.authors">
     {{ author }}
   </span>
-  Publisher: {{ item.doc.publisher }}<br>
-  Date : {{ item.doc.date }}<br>
-  ISBN 10 : {{ item.doc.isbn-10 }}<br>
-  ISBN 13 : {{ item.doc.isbn-13 }}<br>
-  SmallThumbnail : {{ item.doc.smallThumbnail }}<br>
-  Thumbnail : {{ item.doc.thumbnail }}<br>
-  Page count : {{ item.doc.pageCount }}<br>
-  Favorite : {{ item.doc.favorite }}<br>
-  Tag : {{ item.doc.tag }}<br>
+  Publisher: {{ item.publisher }}<br>
+  Date : {{ item.date }}<br>
+  ISBN 10 : {{ item.isbn-10 }}<br>
+  ISBN 13 : {{ item.isbn-13 }}<br>
+  SmallThumbnail : {{ item.smallThumbnail }}<br>
+  Thumbnail : {{ item.thumbnail }}<br>
+  Page count : {{ item.pageCount }}<br>
+  Favorite : {{ item.favorite }}<br>
+  Tag : {{ item.tag }}<br>
 
   <p>Thumbnail</p>  
-  <img [src]="item.doc.thumbnail" [alt]="item.doc.thumbnail" (click)="showSrc()">
+  <img [src]="item.thumbnail" [alt]="item.thumbnail" (click)="showSrc()">
 
 </ion-content>
 

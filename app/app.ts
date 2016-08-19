@@ -15,7 +15,7 @@ import {BookService} from './services/BookService';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  // make HelloIonicPage the root (or first) page
+  // rootPage du NavController = MesLivresPage
   rootPage: any = MesLivresPage;
   pages: Array<{title: string, component: any}>;
 

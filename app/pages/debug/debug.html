@@ -18,9 +18,9 @@
 <ion-content padding>
   <ion-list>
     <ion-item *ngFor="let item of items" (click)="selectItem(item)">
-      <h3>{{ item.doc._id }}</h3>
-      <h4>(rev: {{ item.doc._rev }}</h4>
-      <p>{{ item.doc.title }}</p>
+      <p>{{ item._id }}</p>
+      <p>(rev: {{ item._rev }}</p>
+      <p>{{ item.title }}</p>
     </ion-item>
   </ion-list>
 
