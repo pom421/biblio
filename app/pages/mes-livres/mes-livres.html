@@ -55,9 +55,9 @@
       </button>
 
       <div [ngSwitch]="item.tag" (click)="clickTag(item.tag)">
-        <button outline round small danger *ngSwitchCase="'idee-cadeau'">idée cadeau</button>
-        <button outline round small secondary *ngSwitchCase="'a-vendre'">à vendre</button>
-        <button outline round small primary *ngSwitchDefault>possède</button>
+        <button outline round small danger *ngSwitchCase="'idee-cadeau'" clickTag("'idee-cadeau'")>idée cadeau</button>
+        <button outline round small secondary *ngSwitchCase="'a-vendre'" clickTag("'ia-vendre'")>à vendre</button>
+        <button outline round small primary *ngSwitchDefault clickTag("'possede'")>possède</button>
       </div>
 
     </button>

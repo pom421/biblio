@@ -35,7 +35,7 @@ export class BookPersistance {
     }
   }
 
-  add(book) {
+  add(book): Promise<Object> {
     return BookPersistance.db.post(book).then(res => {
       console.log('Résultat de l\'ajout', res);
       return res;
@@ -45,7 +45,7 @@ export class BookPersistance {
     });
   }
 
-  upd(book): Promise<any>{
+  upd(book): Promise<Object>{
     //return BookPersistance.db.put(book, {_id: book.doc._id, _rev : book.doc._rev});
     return BookPersistance.db.put(book).then(res => {
       console.log('Résultat de la maj', res);
@@ -56,33 +56,20 @@ export class BookPersistance {
     })
   }
 
-  // faux car il faut imbriquer un callback pour exécuter le traitement de remplissage de this.items (de MesLivresPage) seulement quand le then est lancé
-  getAllOld() {
-    if (!this.books) {
-      console.log('avant db.allDocs')
-      BookPersistance.db.allDocs({ include_docs: true }).then(docs => {
-        console.log('on rend les books dans getAll')
-        this.books = docs;
-        return this.books;
-      });
-      console.log('après db.allDocs')
-    } else {
-      console.log('books déjà chargés dans getAll');
-      return this.books;
-    }
-  }
-
   // bon car générique. Chaque appelant pourra mettre le traitement qu'il souhaite via le callback
-  getAll(callback){
-    let data = [];
-    BookPersistance.db.allDocs({ include_docs: true})
+  getAll(): Promise<any>{
+    return BookPersistance.db.allDocs({ include_docs: true})
       .then(result => {
+        let data = [];
         result.rows.map(row => {
           data.push(row.doc);
         })
-        callback(data);
+        return data;
       })
-      .catch(err => console.error);
+      .catch(err => {
+        console.error(err);
+        return err;
+      });
   }
 
   deleteAll(){

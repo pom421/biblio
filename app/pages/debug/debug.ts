@@ -19,7 +19,7 @@ export class DebugPage {
   constructor(private nav: NavController,
     private bookPersistance: BookPersistance) {
 
-      bookPersistance.getAll(books => {
+      bookPersistance.getAll().then(books => {
         this.items = books
       });
   }

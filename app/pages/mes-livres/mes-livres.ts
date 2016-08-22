@@ -41,7 +41,7 @@ export class MesLivresPage {
   }
 
   private refreshListItems(): void {
-    this.bookPersistance.getAll(docs => {
+    this.bookPersistance.getAll().then(docs => {
       this.items = docs;
     })
     /*
@@ -147,7 +147,7 @@ export class MesLivresPage {
   // filtre à partir du moteur de recherche
   private getItems(event): void {
     this.query = event.target.value;
-    this.bookPersistance.getAll(docs => {
+    this.bookPersistance.getAll().then(docs => {
       this.items = docs.filter((item) => {
         return this.filterFunction(item);
       });
@@ -168,7 +168,7 @@ export class MesLivresPage {
 
   // méthode d'affichage avec filtres éventuels
   private filter(): void {
-    this.bookPersistance.getAll(docs => {
+    this.bookPersistance.getAll().then(docs => {
       this.items = docs.filter((item) => {
         return this.filterFunction(item);
       })
@@ -181,6 +181,7 @@ export class MesLivresPage {
   }
 
   private clickTag(tag: string): void {
+    console.log('dans clickTag', tag)
     this.selectedFilter = tag;
     this.filter();
   }

@@ -22,9 +22,7 @@
           <b>{{ selectedItem.title }}</b> - {{ selectedItem.date }}
         </p>
         <p>
-          <span *ngFor="let author of selectedItem.authors">
-              {{ author }}
-          </span>
+          {{ selectedItem.authors.join(', ') }}
         </p>
         <button clear large danger (click)="toggleFavorite(selectedItem)">
           <span [ngSwitch]="selectedItem.favorite">
