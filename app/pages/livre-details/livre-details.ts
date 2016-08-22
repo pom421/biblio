@@ -11,8 +11,8 @@ export class LivreDetailsPage {
   selectedItem: any;
   filterOptionsAlert: any;
 
-  constructor(private nav: NavController, 
-    navParams: NavParams, 
+  constructor(private nav: NavController,
+    navParams: NavParams,
     private constants: Constants,
     private bookPersistance: BookPersistance,
     private toastController: ToastController,
@@ -25,7 +25,7 @@ export class LivreDetailsPage {
 
     console.log('item', this.selectedItem)
     console.log('index LivreDetailsPage', this.viewController.index);
-    
+
   }
 
   urlLargerImg(item) {
@@ -48,6 +48,10 @@ export class LivreDetailsPage {
         duration: 1500
       });
     });
-
   }
+
+  private upd(item) {
+    this.bookPersistance.upd(item);
+  }
+
 }

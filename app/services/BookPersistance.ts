@@ -31,7 +31,7 @@ export class BookPersistance {
       BookPersistance.db.info().then(console.log.bind(console));
     }
     else {
-      console.log('Base de donnée PouchDB déjà instanciée');
+      console.log('Base de données PouchDB déjà instanciée');
     }
   }
 

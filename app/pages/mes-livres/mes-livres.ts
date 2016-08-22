@@ -31,19 +31,16 @@ export class MesLivresPage {
     private bookPersistance: BookPersistance,
     private toastController: ToastController,
     private viewController: ViewController) {
-      console.log('dans mes livres page')
+      console.log('Dans MesLivresPage')
       this.refreshListItems();
       this.filterOptionsAlert = {
         title: "Catégorie",
       }
       this.favoritesOnly = false;
-      console.log('index MesLivresPages', this.viewController.index);
-      
+      //console.log('index MesLivresPages', this.viewController.index);
   }
 
-  // données de test
   private refreshListItems(): void {
-    console.log('au début de refreshListItems')
     this.bookPersistance.getAll(docs => {
       this.items = docs;
     })
@@ -149,16 +146,12 @@ export class MesLivresPage {
 
   // filtre à partir du moteur de recherche
   private getItems(event): void {
-    this.refreshListItems();
-
     this.query = event.target.value;
-
-    // if the value is an empty string don't filter the items
-    //if (val && val.trim() != '') {
-    this.items = this.items.filter((item) => {
-      return this.filterFunction(item);
+    this.bookPersistance.getAll(docs => {
+      this.items = docs.filter((item) => {
+        return this.filterFunction(item);
+      });
     })
-    //}
   }
 
   // navigation sur la page des détails
@@ -175,9 +168,15 @@ export class MesLivresPage {
 
   // méthode d'affichage avec filtres éventuels
   private filter(): void {
-    this.refreshListItems();
-    this.items = this.items.filter((item) => {
-      return this.filterFunction(item);
+    this.bookPersistance.getAll(docs => {
+      this.items = docs.filter((item) => {
+        return this.filterFunction(item);
+      })
+    });
+
+    console.log('on trouve pour this.items')
+    this.items.forEach(item => {
+      console.log(item)
     })
   }
 

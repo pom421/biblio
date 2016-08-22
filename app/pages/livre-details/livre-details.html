@@ -9,14 +9,31 @@
 
 <ion-content>
   <ion-card *ngIf="selectedItem" class="selection">
-    <!--<img src="{{ selectedItem.imageUrl }}" alt="">-->
-    <img [src]="urlLargerImg(selectedItem)" style="width: 40%; inline: true">
-    <b>{{ selectedItem.title }}</b> - {{ selectedItem.date }}
-    <p>
-      <span *ngFor="let author of selectedItem.authors">
-        {{ author }}
-      </span>
-    </p>
+    <ion-row no-padding>
+      <ion-col>
+
+      <!--<img src="{{ selectedItem.imageUrl }}" alt="">-->
+      <!--<img [src]="urlLargerImg(selectedItem)" style="width: 40%; display: inline">-->
+        <img [src]="urlLargerImg(selectedItem)" style="border: 1px solid lighgrey">
+      </ion-col>
+
+      <ion-col>
+        <p>
+          <b>{{ selectedItem.title }}</b> - {{ selectedItem.date }}
+        </p>
+        <p>
+          <span *ngFor="let author of selectedItem.authors">
+              {{ author }}
+          </span>
+        </p>
+        <button clear large danger (click)="toggleFavorite(selectedItem)">
+          <span [ngSwitch]="selectedItem.favorite">
+            <ion-icon name="star-outline" *ngSwitchCase="false"></ion-icon>
+            <ion-icon name="star" *ngSwitchCase="true"></ion-icon>
+          </span>
+        </button>
+      </ion-col>
+    </ion-row>
 
     <ion-card-content>
       <p>{{ selectedItem.description }}</p>
@@ -24,22 +41,16 @@
 
     <ion-row no-padding>
       <ion-col>
-        <button clear large danger (click)="toggleFavorite(selectedItem)">
-          <span [ngSwitch]="selectedItem.favorite">
-            <ion-icon name="star-outline" *ngSwitchCase="false"></ion-icon>
-            <!--<ion-icon name="star-outline" *ngSwitchCase="false"></ion-icon>-->
-            <ion-icon name="star" *ngSwitchCase="true"></ion-icon>
-          </span>
-        </button>
-      </ion-col>
-      <ion-col>
-        <!--<ion-select item-right [(ngModel)]="selectedItem.tag" cancelText="Annuler" (ionChange)="filter()" [alertOptions]="filterOptionsAlert">
+        <ion-item>
+          <ion-label>Catégorie</ion-label>
+          <ion-select item-right [(ngModel)]="selectedItem.tag" cancelText="Annuler" (ionChange)="upd(selectedItem)" [alertOptions]="filterOptionsAlert">
             <ion-option value="possede">{{ constants.categories["possede"] }}</ion-option>
             <ion-option value="a-vendre">{{ constants.categories["a-vendre"] }}</ion-option>
             <ion-option value="idee-cadeau">{{ constants.categories["idee-cadeau"] }}</ion-option>
-        </ion-select>-->
-        toto est le plus azeaze
+          </ion-select>
+        </ion-item>
       </ion-col>
     </ion-row>
   </ion-card>
 </ion-content>
+
