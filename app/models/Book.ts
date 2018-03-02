@@ -1,5 +1,16 @@
 /**
  * Classe modèle représentant un livre 
+ * 
+ * Exemple de Book :
+ *   {
+ *     doc: {
+ *      title: "Jazz piano concepts & techniques",
+ *      authors: ["John Valerio"],
+ *      date: "1998",
+ *      smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/51pHa%2BiqZGL._SS100_.jpg",
+ *      favorite: false,
+ *      tag: "idee-cadeau"
+ *   }
  */
 export class Book {
   _id;

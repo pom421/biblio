@@ -17,7 +17,8 @@ export class LivreDetailsPage {
     private bookPersistance: BookPersistance,
     private toastController: ToastController,
     private viewController: ViewController) {
-    // If we navigated to this page, we will have an item available as a nav param
+    
+    // récupération du selectedItem de la page précédente MesLivresPage
     this.selectedItem = navParams.get('item');
     this.filterOptionsAlert = {
       title: "Catégorie",
@@ -25,13 +26,14 @@ export class LivreDetailsPage {
 
     console.log('item', this.selectedItem)
     console.log('index LivreDetailsPage', this.viewController.index);
-
   }
 
+  // récupération d'une image plus grande à partir de la petite image (à priori plus utilisé depuis l'utilisation de Google Book API)
   urlLargerImg(item) {
     return (item.smallThumbnail ? item.smallThumbnail.replace(/_SS100_\.jpg$/, '_SX350_BO1,204,203,200_.jpg') : '');
   }
 
+  // modification du favori du livre en base
   private toggleFavorite(item): void {
     item.favorite = !item.favorite;
     const msg = item.favorite ? 'Vous avez ajouté un favori' : 'Vous avez supprimé un favori';
@@ -50,6 +52,7 @@ export class LivreDetailsPage {
     });
   }
 
+  // modification du livre
   private upd(item) {
     this.bookPersistance.upd(item);
   }

@@ -7,19 +7,19 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="outer-content">
   <ion-card *ngIf="selectedItem" class="selection">
     <ion-row no-padding>
       <ion-col>
 
       <!--<img src="{{ selectedItem.imageUrl }}" alt="">-->
       <!--<img [src]="urlLargerImg(selectedItem)" style="width: 40%; display: inline">-->
-        <img [src]="urlLargerImg(selectedItem)" style="border: 1px solid lighgrey">
+        <img class="bordered" [src]="urlLargerImg(selectedItem)">
       </ion-col>
 
-      <ion-col>
+      <ion-col center text-center>
         <p>
-          <b>{{ selectedItem.title }}</b> - {{ selectedItem.date }}
+          <b>{{ selectedItem.title }}</b><br />{{ selectedItem.date }}
         </p>
         <p>
           {{ selectedItem.authors.join(', ') }}

@@ -22,6 +22,8 @@ export class MesLivresPage {
   filterOptionsAlert: any;
   // le filtre sur les favoris uniquement
   favoritesOnly: boolean;
+  // affichage ou non du panneau des filtres
+  displayFilters: boolean = false;
 
   constructor(private nav: NavController,
     private navParams: NavParams,
@@ -32,108 +34,13 @@ export class MesLivresPage {
     private toastController: ToastController,
     private viewController: ViewController) {
       console.log('Dans MesLivresPage')
-      this.refreshListItems();
+      // appel de la fonction de filtre sans rien de renseigner => renvoie tous les livres de la base au démarrage, c'est ce qu'on veut
+      this.filter();
       this.filterOptionsAlert = {
         title: "Catégorie",
       }
       this.favoritesOnly = false;
       //console.log('index MesLivresPages', this.viewController.index);
-  }
-
-  private refreshListItems(): void {
-    this.bookPersistance.getAll().then(docs => {
-      this.items = docs;
-    })
-    /*
-    if (this.bookPersistance.getAll()) {
-      console.log('dans le if de refreshListItems')
-      this.items = this.bookPersistance.getAll().rows;
-    }
-    else {
-      console.log('dans le else de refreshListItems')
-      this.items = [
-        {
-          doc: {
-            title: "Jazz piano concepts & techniques",
-            authors: ["John Valerio"],
-            date: "1998",
-            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/51pHa%2BiqZGL._SS100_.jpg",
-            favorite: false,
-            tag: "idee-cadeau"
-          }
-        },
-        {
-          doc: {
-            title: "La confrérie des éveillés",
-            authors: ["Jacques Attali"],
-            date: "2006",
-            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/517y9kwvOeL._SS100_.jpg",
-            favorite: false,
-            tag: "a-vendre"
-          }
-        },
-        {
-          doc: {
-            title: "Orage d'acier",
-            authors: ["Ernst Jünger"],
-            date: "2002",
-            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/41KLqOoG4cL._SS100_.jpg",
-            favorite: true,
-            tag: "possede"
-          }
-        },
-        {
-          doc: {
-            title: "Bienvenue au club",
-            authors: ["Johnatan Coe"],
-            date: "2004",
-            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/51nClspGIEL._SS100_.jpg",
-            favorite: false,
-            tag: "possede"
-          }
-        },
-        {
-          doc: {
-            title: "Ça",
-            authors: ["Stephen King"],
-            date: "2002",
-            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/51Gn%2Be0uAVL._SS100_.jpg",
-            favorite: true,
-            tag: "a-vendre"
-          }
-        },
-        {
-          doc: {
-            title: "Le jour des triffides",
-            authors: ["John Wyndham"],
-            date: "2007",
-            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/51GKAuci--L._SS100_.jpg",
-            favorite: true,
-            tag: "possede"
-          }
-        },
-        {
-          doc: {
-            title: "Le troisième chimpanzé: Essai sur l'évolution et l'avenir de l'animal humain",
-            authors: ["Jared Diamond"],
-            date: "2011",
-            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/51k7n-PEvCL._SS100_.jpg",
-            favorite: false,
-            tag: "idee-cadeau"
-          }
-        },
-        {
-          doc: {
-            title: "Cujo",
-            authors: ["Stephen King"],
-            date: "1983",
-            smallThumbnail: "https://images-eu.ssl-images-amazon.com/images/I/519yvrnYP2L._SS100_.jpg",
-            favorite: false,
-            tag: "a-vendre"
-          }
-        },
-      ];
-    }*/
   }
 
   // fonction de filtre en fonction du filtre catégorie, de l'affichage uniquement des favoris et de l'éventuel requête
@@ -180,34 +87,33 @@ export class MesLivresPage {
     })
   }
 
+  // quand on clique sur une catégorie, une recherche se fait sur les livres de cette catégorie (raccourci équivalent à un filtre sur les catégories)
   private clickTag(tag: string): void {
     console.log('dans clickTag', tag)
     this.selectedFilter = tag;
+    this.displayFilters = true;
     this.filter();
   }
 
+  // pour supprimer les filtres éventuels
   private resetFilters(): void {
     this.selectedFilter = null;
+    this.displayFilters = false;
     this.filter();
   }
 
+  // pour supprimer la recherche des favoris
   private resetFavoritesOnly(): void {
     this.favoritesOnly = null;
     this.filter();
   }
 
-  // mise en favori ou inversement (attention : cette modification n'est pas persistée pour l'instant 
-  // affichage d'un toast pour l'exemple
-  private toggleFavorite(item): void {
-    item.favorite = !item.favorite;
-
-    const msg = item.favorite ? 'Vous avez ajouté un favori' : 'Vous avez supprimé un favori';
-
-    const toast = this.toastController.create({
-      message: msg,
-      duration: 1500
-    })
-
-    toast.present();
+  // quand on clique sur l'icône de filtre en haut à droite
+  private toggleDisplayFilters(): void {
+    console.log('dans displayFilters', this.displayFilters)
+    this.selectedFilter = null;
+    this.favoritesOnly = null;
+    this.displayFilters = !this.displayFilters;
+    this.filter();
   }
 }

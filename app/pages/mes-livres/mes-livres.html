@@ -1,9 +1,18 @@
 <ion-header>
-  <ion-navbar>
-    <button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+  <ion-navbar primary>
+    <ion-buttons left>
+      <button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>Ma bibliothèque</ion-title>
+    <ion-buttons end>
+      <button (click)="toggleDisplayFilters()" [ngSwitch]="displayFilters">
+        <ion-icon name="ios-funnel-outline" *ngSwitchCase="false"></ion-icon>
+        <ion-icon name="ios-funnel" *ngSwitchDefault></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
@@ -18,12 +27,11 @@
       Mes livres
     </ion-list-header>
 -->
-    <ion-item>
+    <ion-item *ngIf="displayFilters">
       <!--<ion-icon item-left name="ios-funnel" padding-right></ion-icon>-->
       <ion-label>Filtre</ion-label>
 
-      <ion-select item-right [(ngModel)]="selectedFilter" cancelText="Annuler" placeholder="Choisir..." (ionChange)="filter()"
-        [alertOptions]="filterOptionsAlert">
+      <ion-select item-right [(ngModel)]="selectedFilter" cancelText="Annuler" placeholder="Choisir..." (ionChange)="filter()" [alertOptions]="filterOptionsAlert">
         <ion-option value="possede">{{ constants.categories["possede"] }}</ion-option>
         <ion-option value="a-vendre">{{ constants.categories["a-vendre"] }}</ion-option>
         <ion-option value="idee-cadeau">{{ constants.categories["idee-cadeau"] }}</ion-option>
@@ -35,7 +43,7 @@
 
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="displayFilters">
       <ion-label>Uniquement les favoris</ion-label>
       <ion-toggle [(ngModel)]="favoritesOnly" (ionChange)="filter()"></ion-toggle>
     </ion-item>
@@ -47,18 +55,24 @@
       <h3 text-wrap>{{ item.title }}</h3>
       <p small>{{ item.date }}</p>
 
-      <button clear large item-right (click)="toggleFavorite(item)">
+      <button clear large item-right>
         <span [ngSwitch]="item.favorite">
           <ion-icon name="star-outline" *ngSwitchCase="false"></ion-icon>
           <ion-icon name="star" *ngSwitchCase="true"></ion-icon>
         </span>
       </button>
 
-      <div [ngSwitch]="item.tag" (click)="clickTag(item.tag)">
-        <button outline round small danger *ngSwitchCase="'idee-cadeau'" clickTag("'idee-cadeau'")>idée cadeau</button>
-        <button outline round small secondary *ngSwitchCase="'a-vendre'" clickTag("'ia-vendre'")>à vendre</button>
-        <button outline round small primary *ngSwitchDefault clickTag("'possede'")>possède</button>
-      </div>
+      <ion-buttons [ngSwitch]="item.tag">
+        <button outline round danger (click)="clickTag('idee-cadeau')" *ngSwitchCase="'idee-cadeau'">
+          idée cadeau
+        </button>
+        <button outline round secondary (click)="clickTag('a-vendre')" *ngSwitchCase="'a-vendre'">
+          à vendre
+        </button>
+        <button outline round primary (click)="clickTag('possede')" *ngSwitchDefault>
+          possède
+        </button>
+      </ion-buttons>
 
     </button>
   </ion-list>

@@ -22,6 +22,7 @@ export class BookPersistance {
     this.initDB();
   }
 
+  // création ou récupération de la base de données
   initDB() {
     if (!BookPersistance.db) {
       BookPersistance.db = new PouchDB('books', { adapter: 'websql' });
@@ -35,6 +36,7 @@ export class BookPersistance {
     }
   }
 
+  // ajout d'un livre à la base
   add(book): Promise<Object> {
     return BookPersistance.db.post(book).then(res => {
       console.log('Résultat de l\'ajout', res);
@@ -45,7 +47,8 @@ export class BookPersistance {
     });
   }
 
-  upd(book): Promise<Object>{
+  // mise à jour d'un livre dans la base
+  upd(book): Promise<Object> {
     //return BookPersistance.db.put(book, {_id: book.doc._id, _rev : book.doc._rev});
     return BookPersistance.db.put(book).then(res => {
       console.log('Résultat de la maj', res);
@@ -57,8 +60,8 @@ export class BookPersistance {
   }
 
   // bon car générique. Chaque appelant pourra mettre le traitement qu'il souhaite via le callback
-  getAll(): Promise<any>{
-    return BookPersistance.db.allDocs({ include_docs: true})
+  getAll(): Promise<any> {
+    return BookPersistance.db.allDocs({  include_docs: true })
       .then(result => {
         let data = [];
         result.rows.map(row => {
@@ -72,7 +75,8 @@ export class BookPersistance {
       });
   }
 
-  deleteAll(){
+  // Suppression de tous les livres dans la base
+  deleteAll() {
     BookPersistance.db.allDocs({ include_docs: true }).then(docs => {
       console.log(docs);
       docs.rows.forEach(row => {
